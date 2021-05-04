@@ -14,3 +14,6 @@ class Drunkman:
         y = random.choice([1, -1])
 
         return self.position.move(x, y)
+
+    def reset(self):
+        self.position = Position(0, 0)

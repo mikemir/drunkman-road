@@ -8,8 +8,8 @@ class Position:
         self.x = self.x + delta_x
         self.y = self.y + delta_y
 
-    def distance(self, x, y):
-        delta_x = self.x - x
-        delta_y = self.y - y
+    def distance(self, position):
+        delta_x = self.x - position.x
+        delta_y = self.y - position.y
 
-        return round((delta_x ** 2 + delta_y ** 2) ** 0.5, 1)
+        return round((delta_x ** 2 + delta_y ** 2) ** 0.5, 2)
