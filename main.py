@@ -1,9 +1,23 @@
 from drunkman import Drunkman
 from field import Field
 from position import Position
+from bokeh.plotting import figure, show
+
+def graph(x, y):
+    graphic = figure(title = 'Camino de borrachos', x_axis_label = 'Pasos dados', y_axis_label = 'Distancia recorrida')
+    graphic.line(x, y, legend_label = 'distancia media')
+
+    show(graphic)
+
+def graph_path(x,y):
+    graphic = figure(title='Random path')
+    graphic.line(x,y)
+
+    show(graphic)
+
 
 def main():
-    walk_steps = [10, 100, 1000, 10000, 100000]
+    walk_steps = [10, 100, 1000, 10000]
     cantidad = 100
 
     myfield = Field()
@@ -14,6 +28,7 @@ def main():
     # myfield.add_drunkman(Drunkman('Tatiana Peña'))
 
     for drunkman in myfield.get_drunkmans():
+        walking_media_distances = []
         print(f'Prueba con borracho {drunkman.name}')
         print(f'{"*" * 75}')
 
@@ -28,14 +43,18 @@ def main():
                 walking_distances.append(distance)
                 drunkman.reset()
 
-            print(f'Media: {round(sum(walking_distances) / len(walking_distances), 2)}')
+            walking_media_distance = round(sum(walking_distances) / len(walking_distances), 2)
+            walking_media_distances.append(walking_media_distance)
+            print(f'Media: {walking_media_distance}')
             print(f'Cantidad de veces: {len(walking_distances)}')
             print(f'Maximo: {max(walking_distances)}')
             print(f'Minimo: {min(walking_distances)}')
-            print(f'{"=" * 60}')
+            print(f'{"=" * 65}')
 
+        drunkman_history = myfield.get_history(drunkman)
+        graph_path([p.x for p in drunkman_history], [p.y for p in drunkman_history])
+        #graph(walk_steps, walking_media_distances)
         print('\n')
-
 
 if __name__ == '__main__':
     main()
